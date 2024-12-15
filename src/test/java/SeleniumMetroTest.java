@@ -1,35 +1,39 @@
-import driver.WebDriverCreator;
+import driver.WebDriverVendors;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import pageobject.MetroHomePage;
 
 public class SeleniumMetroTest {
-  WebDriverCreator webDriverCreator = new WebDriverCreator();
+  WebDriverVendors webDriverVendors = new WebDriverVendors();
+  // поля для драйвера и страницы
   private WebDriver driver;
   private MetroHomePage metroPage;
 
+  // константы для тестовых данных
   private static final String CITY_SAINTP = "Санкт-Петербург";
   private static final String STATION_SPORTIVNAYA = "Спортивная";
   private static final String STATION_LUBYANKA = "Лубянка";
   private static final String STATION_KRASNOGVARD = "Красногвардейская";
 
-
+  // все предварительные действия вынеси в Before
   @Before
   public void setUp() {
-    driver = webDriverCreator.createChromeDriver();
-    driver = new ChromeDriver();
-    driver.get("https://qa-metro.stand-2.praktikum-services.ru/");
+    driver = WebDriverVendors.get("Chrome");
+    // создай объект класса страницы стенда
     metroPage = new MetroHomePage(driver);
+    // дождись загрузки страницы
     metroPage.waitForLoadHomePage();
   }
 
+  // проверяем, как работает выбор города
   @Test
   public void checkChooseCityDropdown() {
+    // выбираем Санкт-Петербург в списке городов
     metroPage.chooseCity(CITY_SAINTP);
+    // проверяем, что станция метро «Спортивная» видна через 8 секунд
     metroPage.waitForStationVisibility(STATION_SPORTIVNAYA);
   }
 
