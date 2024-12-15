@@ -37,22 +37,29 @@ public class SeleniumMetroTest {
     metroPage.waitForStationVisibility(STATION_SPORTIVNAYA);
   }
 
+  // проверка отображения времени маршрута
   @Test
   public void checkRouteApproxTimeIsDisplayed() {
+    // строим маршрут от «Лубянки» до «Красногвардейской»
     metroPage.buildRoute(STATION_LUBYANKA, STATION_KRASNOGVARD);
+    // проверяем, что у первого маршрута списка отображается нужное примерное время поездки
     Assert.assertEquals("≈ 36 мин.", metroPage.getApproximateRouteTime(0));
   }
 
   @Test
   public void checkRouteStationFromIsCorrect() {
+    // строим маршрут от «Лубянки» до «Красногвардейской»
     metroPage.buildRoute(STATION_LUBYANKA, STATION_KRASNOGVARD);
+    // проверяем, что отображается корректное название станции начала маршрута
     Assert.assertEquals(STATION_LUBYANKA, metroPage.getRouteStationFrom());
 
   }
 
   @Test
   public void checkRouteStationToIsCorrect() {
+    // строим маршрут от «Лубянки» до «Красногвардейской»
     metroPage.buildRoute(STATION_LUBYANKA, STATION_KRASNOGVARD);
+    // проверяем, что отображается корректное название станции конца маршрута
     Assert.assertEquals(STATION_KRASNOGVARD, metroPage.getRouteStationTo());
 
   }
